@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animais disponíveis | AdotaPet</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>AdotaPet</h1>
+        <nav>
+            <a href="/">Início</a>
+            <a href="/animais">Animais</a>
+        </nav>
+    </header>
+
+    <main class="catalogo">
+        <h1>Conheça nossos animais</h1>
+        <p>Encontre um novo amigo para sua família!</p>
+
+        <section id="lista-animais">
+            <p>Carregando animais...</p>
+        </section>
+    </main>
+
+    <script>
+        async function carregarAnimais() {
+            const lista = document.getElementById('lista-animais');
+
+            try {
+                const resposta = await fetch('/api/animais');
+                const animais = await resposta.json();
+
+                lista.innerHTML = '';
+
+                if (animais.length === 0) {
+                    lista.innerHTML = '<p>Nenhum animal disponível no momento.</p>';
+                    return;
+                }
+
+                animais.forEach(animal => {
+                    const imagem = animal.foto
+                        ? `<img src="${animal.foto}" alt="Foto de ${animal.nome}">`
+                        : '<div class="sem-foto">Foto não disponível</div>';
+
+                    lista.innerHTML += `
+                        <article class="card-animal">
+                            ${imagem}
+                            <div class="info-animal">
+                                <h2>${animal.nome}</h2>
+                                <p><strong>Espécie:</strong> ${animal.especie}</p>
+                                <p><strong>Idade:</strong> ${animal.idade || 'Não informada'}</p>
+                                <p><strong>Sexo:</strong> ${animal.sexo || 'Não informado'}</p>
+                                <p><strong>Porte:</strong> ${animal.porte || 'Não informado'}</p>
+                                <p>${animal.descricao || 'Venha conhecer este animal!'}</p>
+                                <a class="botao-adotar" href="https://wa.me/5563999696459?text=Olá! Tenho interesse em adotar ${encodeURIComponent(animal.nome)}." target="_blank">
+                                    Quero adotar
+                                </a>
+                            </div>
+                        </article>
+                    `;
+                });
+
+            } catch (erro) {
+                lista.innerHTML = '<p>Não foi possível carregar os animais.</p>';
+                console.error(erro);
+            }
+        }
+
+        carregarAnimais();
+    </script>
+
+</body>
+</html>

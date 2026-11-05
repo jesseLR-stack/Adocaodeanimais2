@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel | AdotaPet</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Painel administrativo</h1>
+        <button onclick="sair()">Sair</button>
+    </header>
+
+    <main>
+        <h2>Cadastrar animal</h2>
+
+        <form id="form-animal">
+            <input type="hidden" id="animal-id">
+
+            <input name="nome" placeholder="Nome do animal" required>
+
+            <select name="especie" required>
+                <option value="">Selecione a espécie</option>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+            </select>
+
+            <input name="idade" placeholder="Idade">
+
+            <select name="sexo">
+                <option value="">Sexo</option>
+                <option value="Macho">Macho</option>
+                <option value="Fêmea">Fêmea</option>
+            </select>
+
+            <select name="porte">
+                <option value="">Porte</option>
+                <option value="Pequeno">Pequeno</option>
+                <option value="Médio">Médio</option>
+                <option value="Grande">Grande</option>
+            </select>
+
+            <textarea name="descricao" placeholder="Descrição do animal"></textarea>
+
+            <label>Foto do animal:</label>
+            <input type="file" name="foto" accept="image/*">
+
+            <button type="submit" id="botao-salvar">Cadastrar animal</button>
+            <button type="button" onclick="limparFormulario()">Cancelar edição</button>
+        </form>
+
+        <h2>Animais cadastrados</h2>
+        <section id="lista-admin"></section>
+    </main>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>
